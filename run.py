@@ -78,3 +78,5 @@ HANGMAN = {
 =========
 '''}
 
+word = random.choice(WORDS)
+print(word)
