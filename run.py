@@ -94,3 +94,40 @@ def print_hangman_word(word, letters=[]):
 word = random.choice(WORDS)
 print(word)
 print_hangman_word(word)
+
+lives = 7
+letters_in_word = {letter for letter in word}
+print(letters_in_word)
+correct_letters = []
+wrong_letters = []
+print_hangman_word(word, correct_letters)
+
+while lives > 0 and len(correct_letters) != len(letters_in_word):
+    # verification of the user's input
+    while True:
+        guess_letter = input('guess a letter: ').lower().strip()
+        if not guess_letter.isalpha():
+            print('Invalid input! Only the letters are permitted!')
+        elif len(guess_letter) != 1:
+            print('Invalid input! The guess should be only one letter!')
+        else:
+            break
+    # verification of the correct guess
+    if guess_letter in correct_letters or guess_letter in wrong_letters:
+        print("you've already guessed this letter")
+    elif guess_letter not in letters_in_word:
+        lives -= 1
+        print(f'the letter {guess_letter} is not in the word! Lives: {lives}')
+        print(HANGMAN[lives])
+        wrong_letters.append(guess_letter)
+        if lives == 0:
+            break
+    else:
+        print(f'good one! the letter {guess_letter} is in the word!')
+        correct_letters.append(guess_letter)
+    print_hangman_word(word, correct_letters)
+
+if lives == 0:
+    print("you've lost")
+else:
+    print("you win!!!")
